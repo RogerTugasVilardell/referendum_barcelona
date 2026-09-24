@@ -630,7 +630,9 @@ function htmlTooltip(d) {
   return h;
 }
 const popup = document.getElementById('popup-mapa');
+let popupDada = null;                      // punt amb el popup obert: no se'n mostra el tooltip
 function obrePopupMapa(d, el) {
+  popupDada = d;
   popup.innerHTML = `<button class="btn-tanca" aria-label="Tanca">×</button>` + htmlFitxa(d) + htmlVideos(d.v);
   popup.style.display = 'block';
   const r = el.getBoundingClientRect(), M = 8, W = window.innerWidth, H = window.innerHeight;
@@ -644,7 +646,7 @@ function obrePopupMapa(d, el) {
   if (y < M) y = M;
   popup.style.left = x + 'px'; popup.style.top = y + 'px';
 }
-function tancaPopupMapa() { popup.style.display = 'none'; popup.innerHTML = ''; }
+function tancaPopupMapa() { popup.style.display = 'none'; popup.innerHTML = ''; popupDada = null; }
 popup.addEventListener('click', ev => {
   ev.stopPropagation();
   if (ev.target.closest('.btn-tanca')) tancaPopupMapa();
@@ -755,8 +757,8 @@ const selIcones = gIcones.selectAll('g.icona')
   .attr('filter', 'url(#contorn)')
   .attr('aria-label', d => d.n)
   .each(function (d) { construeixIcona(d3.select(this), d.t); })
-  .on('mouseover', (ev, d) => { if (potHover()) { showTooltip(htmlTooltip(d)); moveTooltip(ev); } })
-  .on('mousemove', ev => { if (potHover()) moveTooltip(ev); })
+  .on('mouseover', (ev, d) => { if (potHover() && d !== popupDada) { showTooltip(htmlTooltip(d)); moveTooltip(ev); } })
+  .on('mousemove', (ev, d) => { if (potHover() && d !== popupDada) moveTooltip(ev); })
   .on('mouseout', () => { if (potHover()) hideTooltip(); })
   .on('click', function (ev, d) { ev.stopPropagation(); hideTooltip(); obrePopupMapa(d, this); });
 
