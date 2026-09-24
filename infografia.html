@@ -835,8 +835,8 @@ botoZoom('zoom-reset', () => vistaInicial(600));
 /* ===================== BLOC 2: PANELL ===================== */
 document.getElementById('xifres').innerHTML = [
   [formatNum(207), 'punts de votació'],
-  [formatNum(389777), 'vots totals'],
-  [formatNum(88.3, '%'), 'vots pel sí']
+  [formatNum(389777), `vots (${formatNum(88.3, '%')} sí)`],
+  [formatNum(298), 'ferits per la policia']
 ].map(([n, t]) => `<div class="xifra"><div class="xifra-num">${n}</div><div class="xifra-text">${t}</div></div>`).join('');
 
 /* ===================== BLOC 2: RECORREGUT ===================== */
