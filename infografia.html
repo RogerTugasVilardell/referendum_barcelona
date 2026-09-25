@@ -318,11 +318,13 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
 .xifra-num { font-family: var(--font-ui); font-weight: 700; font-size: var(--mida-num, 36px); line-height: 1.1; color: var(--text); }
 .xifra-text { font-family: var(--font-contingut); font-size: 14px; line-height: 1.5; color: var(--text-sec); }
 .btn-principal {
-  padding: 10px 14px; border: none; border-radius: 4px; cursor: pointer; background: var(--text); color: #fff;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 14px 7px 10px; border: none; border-radius: 4px; cursor: pointer; background: var(--text); color: #fff;
   font-family: var(--font-ui); font-weight: 700; font-size: 14px; line-height: 1.35; text-align: left;
 }
 .btn-principal:hover { background: #000; }
-.btn-principal .fletxa { margin-right: 6px; }
+/* Play gran: ocupa l'alçada de dues línies de text, és a dir, tot l'interior del requadre */
+.btn-principal .play { flex-shrink: 0; height: 2.7em; width: auto; display: block; }
 
 /* Bloc 2: recorregut */
 #recorregut { display: none; flex-direction: column; height: 100%; min-height: 0; }
@@ -403,8 +405,8 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
       </div>
       <div class="bloc" id="bloc2">
         <div id="panell">
+          <button class="btn-principal" id="btn-rememora"><svg class="play" viewBox="0 0 10 12" aria-hidden="true"><path d="M0.5,0.5L9.5,6L0.5,11.5Z" fill="#fff" stroke="#fff" stroke-linejoin="round"/></svg><span>Rememora la successió de les càrregues més greus</span></button>
           <div class="xifres" id="xifres"></div>
-          <button class="btn-principal" id="btn-rememora"><span class="fletxa" aria-hidden="true">▶</span>Rememora la successió de les càrregues més greus</button>
         </div>
         <div id="recorregut" aria-live="polite">
           <div id="timeline-wrap"><svg id="timeline" aria-hidden="true"></svg></div>
