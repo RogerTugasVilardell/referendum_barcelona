@@ -242,6 +242,7 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
 }
 .ll-item svg { width: 22px; height: 22px; flex-shrink: 0; overflow: visible; }
 .ll-item.apagat { opacity: 0.35; }
+.llegenda-nota { margin: 5px 0 0; max-width: 250px; }   /* mateix estil que els textos de les icones (hereta de .llegenda-mapa) */
 .ll-item:hover .ll-text { text-decoration: underline; }
 
 /* Botons de zoom (a dalt a la dreta, per encàrrec) */
@@ -357,6 +358,7 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
   .llegenda-mapa.plegada .ll-text { display: none; }
   .llegenda-mapa.plegada .ll-items { flex-direction: row; gap: 8px; }
   .llegenda-mapa.plegada .ll-item { width: auto; }
+  .llegenda-mapa.plegada .llegenda-nota { display: none; }
   .ctrl-btn { font-size: 13px; }
   #popup-mapa { max-width: calc(100vw - 16px); }
   #panell { gap: var(--gap-boto, 12px); padding-left: 0; }
@@ -395,6 +397,7 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
               <button class="ll-item" data-tipus="foc" aria-pressed="false"><svg></svg><span class="ll-text">Càrregues policials</span></button>
               <button class="ll-item" data-tipus="hospital" aria-pressed="false"><svg></svg><span class="ll-text">Atenció mèdica i social</span></button>
             </div>
+            <p class="llegenda-nota">Clica en una icona per esborrar la resta</p>
           </div>
           <div id="zoom-controls">
             <button class="ctrl-btn" id="zoom-in" aria-label="Apropar">+</button>
@@ -445,7 +448,7 @@ svg#mapa[viewBox] { width: 100%; height: 100%; }   /* només mapes amb viewBox, 
 <!-- Icones (Twemoji) i filtre de contorn, reutilitzats al mapa i a la llegenda -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <symbol id="ic-urna" viewBox="0 0 36 36"><path fill="#8CCAF7" d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"/><path fill="#292F33" d="M28.5 16.5c0 .829-.672 1.5-1.5 1.5H9c-.829 0-1.5-.671-1.5-1.5S8.172 15 9 15h18c.828 0 1.5.671 1.5 1.5z"/><path fill="#FFD983" d="M26.25 17.188v-14c0-1.105-.895-2-2-2h-13c-1.104 0-2 .895-2 2v14h17z"/><path fill="#5DADEC" d="M34.5 25c0-1.104-.896-2-2-2h-29c-1.104 0-2 .896-2 2v8c0 1.104.896 2 2 2h29c1.104 0 2-.896 2-2v-8z"/><path fill="#4289C1" d="M13.5 23v6c0 1.104.896 2 2 2h5c1.105 0 2-.896 2-2v-6h-9z"/><path fill="#5DADEC" d="M22.5 23v-1c0-1.104-.895-2-2-2h-5c-1.104 0-2 .896-2 2v1h9zm-3 4.5c0 .828-.672 1.5-1.5 1.5-.829 0-1.5-.672-1.5-1.5v-1c0-.828.671-1.5 1.5-1.5.828 0 1.5.672 1.5 1.5v1z"/><path d="M24 5c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5m0 4c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5m0 4c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5" fill="#C1694F"/><g fill="#C1694F"><circle cx="13" cy="5" r="1"/><circle cx="13" cy="9" r="1"/><circle cx="13" cy="13" r="1"/></g></symbol><symbol id="ic-foc" viewBox="0 0 36 36"><path fill="#F4900C" d="M35 19c0-2.062-.367-4.039-1.04-5.868-.46 5.389-3.333 8.157-6.335 6.868-2.812-1.208-.917-5.917-.777-8.164.236-3.809-.012-8.169-6.931-11.794 2.875 5.5.333 8.917-2.333 9.125-2.958.231-5.667-2.542-4.667-7.042-3.238 2.386-3.332 6.402-2.333 9 1.042 2.708-.042 4.958-2.583 5.208-2.84.28-4.418-3.041-2.963-8.333C2.52 10.965 1 14.805 1 19c0 9.389 7.611 17 17 17s17-7.611 17-17z"/><path fill="#FFCC4D" d="M28.394 23.999c.148 3.084-2.561 4.293-4.019 3.709-2.106-.843-1.541-2.291-2.083-5.291s-2.625-5.083-5.708-6c2.25 6.333-1.247 8.667-3.08 9.084-1.872.426-3.753-.001-3.968-4.007C7.352 23.668 6 26.676 6 30c0 .368.023.73.055 1.09C9.125 34.124 13.342 36 18 36s8.875-1.876 11.945-4.91c.032-.36.055-.722.055-1.09 0-2.187-.584-4.236-1.606-6.001z"/></symbol><symbol id="ic-hospital" viewBox="0 0 36 36"><path fill="#DD2E44" d="M12.5 2h11v10.5H34v11H23.5V34h-11V23.5H2v-11h10.5z"/></symbol>
+    <symbol id="ic-urna" viewBox="0 0 36 36"><path fill="#8CCAF7" d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"/><path fill="#292F33" d="M28.5 16.5c0 .829-.672 1.5-1.5 1.5H9c-.829 0-1.5-.671-1.5-1.5S8.172 15 9 15h18c.828 0 1.5.671 1.5 1.5z"/><path fill="#FFD983" d="M26.25 17.188v-14c0-1.105-.895-2-2-2h-13c-1.104 0-2 .895-2 2v14h17z"/><path fill="#5DADEC" d="M34.5 25c0-1.104-.896-2-2-2h-29c-1.104 0-2 .896-2 2v8c0 1.104.896 2 2 2h29c1.104 0 2-.896 2-2v-8z"/><path fill="#4289C1" d="M13.5 23v6c0 1.104.896 2 2 2h5c1.105 0 2-.896 2-2v-6h-9z"/><path fill="#5DADEC" d="M22.5 23v-1c0-1.104-.895-2-2-2h-5c-1.104 0-2 .896-2 2v1h9zm-3 4.5c0 .828-.672 1.5-1.5 1.5-.829 0-1.5-.672-1.5-1.5v-1c0-.828.671-1.5 1.5-1.5.828 0 1.5.672 1.5 1.5v1z"/><path d="M24 5c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5m0 4c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5m0 4c0 .276-.224.5-.5.5H16c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h7.5c.276 0 .5.224.5.5" fill="#C1694F"/><g fill="#C1694F"><circle cx="13" cy="5" r="1"/><circle cx="13" cy="9" r="1"/><circle cx="13" cy="13" r="1"/></g></symbol><symbol id="ic-foc" viewBox="0 0 36 36"><path fill="#F4900C" d="M35 19c0-2.062-.367-4.039-1.04-5.868-.46 5.389-3.333 8.157-6.335 6.868-2.812-1.208-.917-5.917-.777-8.164.236-3.809-.012-8.169-6.931-11.794 2.875 5.5.333 8.917-2.333 9.125-2.958.231-5.667-2.542-4.667-7.042-3.238 2.386-3.332 6.402-2.333 9 1.042 2.708-.042 4.958-2.583 5.208-2.84.28-4.418-3.041-2.963-8.333C2.52 10.965 1 14.805 1 19c0 9.389 7.611 17 17 17s17-7.611 17-17z"/><path fill="#FFCC4D" d="M28.394 23.999c.148 3.084-2.561 4.293-4.019 3.709-2.106-.843-1.541-2.291-2.083-5.291s-2.625-5.083-5.708-6c2.25 6.333-1.247 8.667-3.08 9.084-1.872.426-3.753-.001-3.968-4.007C7.352 23.668 6 26.676 6 30c0 .368.023.73.055 1.09C9.125 34.124 13.342 36 18 36s8.875-1.876 11.945-4.91c.032-.36.055-.722.055-1.09 0-2.187-.584-4.236-1.606-6.001z"/></symbol><symbol id="ic-foc-fosc" viewBox="0 0 36 36"><path fill="#F4900C" d="M35 19c0-2.062-.367-4.039-1.04-5.868-.46 5.389-3.333 8.157-6.335 6.868-2.812-1.208-.917-5.917-.777-8.164.236-3.809-.012-8.169-6.931-11.794 2.875 5.5.333 8.917-2.333 9.125-2.958.231-5.667-2.542-4.667-7.042-3.238 2.386-3.332 6.402-2.333 9 1.042 2.708-.042 4.958-2.583 5.208-2.84.28-4.418-3.041-2.963-8.333C2.52 10.965 1 14.805 1 19c0 9.389 7.611 17 17 17s17-7.611 17-17z"/><path fill="#F4900C" d="M28.394 23.999c.148 3.084-2.561 4.293-4.019 3.709-2.106-.843-1.541-2.291-2.083-5.291s-2.625-5.083-5.708-6c2.25 6.333-1.247 8.667-3.08 9.084-1.872.426-3.753-.001-3.968-4.007C7.352 23.668 6 26.676 6 30c0 .368.023.73.055 1.09C9.125 34.124 13.342 36 18 36s8.875-1.876 11.945-4.91c.032-.36.055-.722.055-1.09 0-2.187-.584-4.236-1.606-6.001z"/></symbol><symbol id="ic-hospital" viewBox="0 0 36 36"><path fill="#DD2E44" d="M12.5 2h11v10.5H34v11H23.5V34h-11V23.5H2v-11h10.5z"/></symbol>
     <filter id="contorn" x="-25%" y="-25%" width="150%" height="150%">
       <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="dilatat"/>
       <feFlood flood-color="#000000"/>
@@ -664,7 +667,8 @@ function construeixIcona(g, t) {
   g.append('circle').attr('class', 'i-hit').attr('fill', 'transparent');
   if (t === 'urna' || t === 'urnafoc') g.append('use').attr('class', 'i-urna').attr('href', '#ic-urna');
   if (t === 'hospital') g.append('use').attr('class', 'i-hosp').attr('href', '#ic-hospital');
-  if (t === 'foc' || t === 'urnafoc') g.append('use').attr('class', 'i-foc').attr('href', '#ic-foc');
+  if (t === 'foc') g.append('use').attr('class', 'i-foc').attr('href', '#ic-foc');
+  if (t === 'urnafoc') g.append('use').attr('class', 'i-foc').attr('href', '#ic-foc-fosc');
 }
 function midaIcona(g, t, s) {
   const quadre = (sel, x, y, m) => sel.attr('x', x).attr('y', y).attr('width', m).attr('height', m);
